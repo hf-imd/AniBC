@@ -1,2 +1,0 @@
-# AniBC
-The ABC Animated
