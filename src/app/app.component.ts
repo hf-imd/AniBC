@@ -23,7 +23,7 @@ export class AppComponent {
     }
 
     public ngOnInit() {
-        this.database.sync('http://localhost:5984/anibc');
+           this.database.sync('https://anibc.smileupps.com/anibc');
         this.database.getChangeListener().subscribe(data => {
             for (let i = 0; i < data.change.docs.length; i++) {
                 this.zone.run(() => {
