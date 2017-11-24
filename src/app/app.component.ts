@@ -19,11 +19,12 @@ export class AppComponent {
             'lastname': ''
         };
 
-      //  this.ngOnInit();
+       // this.ngOnInit();
     }
 
     public ngOnInit() {
-           this.database.sync('https://anibc.smileupps.com/anibc');
+          this.database.sync('https://www:imd2017@anibc.smileupps.com/anibc');
+
         this.database.getChangeListener().subscribe(data => {
             for (let i = 0; i < data.change.docs.length; i++) {
                 this.zone.run(() => {
