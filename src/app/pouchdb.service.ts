@@ -42,6 +42,7 @@ export class PouchdbService {
      */
     public put(id: string, document: any) {
 
+        console.log('id:' + id);
         // build id from form.username
         document._id = id;
 
@@ -53,7 +54,6 @@ export class PouchdbService {
 
             // if not, put it in
             if (error.status == '404') {
-                
                 return this.database.put(document).then(function (response) {
                     // handle response
                 }).catch(function (err) {

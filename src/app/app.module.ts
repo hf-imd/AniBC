@@ -4,11 +4,16 @@ import {FormsModule} from '@angular/forms';
 
 import {AppComponent} from './app.component';
 import {PouchdbService} from './pouchdb.service';
+import { AlphabetListComponent } from './alphabet-list/alphabet-list.component';
+import { AuthorsListComponent } from './authors-list/authors-list.component';
 
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        CharlistComponent,
+        AlphabetListComponent,
+        AuthorsListComponent
     ],
     imports: [
         BrowserModule,

@@ -44,12 +44,26 @@ https://github.com/davidmanangan/pouchdb-angular4/tree/master/src
 
 ## Pakages
 
-#### typings
-npm install typings -g`
+### Sass
+`npm install node-sass --save`
 
+#### typings
+`npm install typings -g`
 
 #### Pouchdb
 ```
 npm install pouchdb --save
 typings install dt~require --save --global
 ```
+
+
+#### TODO
+ - Add AlphabetList
+ - Add AuthorList
+ - Add Navigation
+ - Add PlayerContainer
+ - Add Admin / Upload
+ - Add Footnotes / Footer // find other Name // Copyright an Login
+ 
+ 
+ ng generate component AlphabetList
