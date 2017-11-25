@@ -42,19 +42,7 @@ https://stackoverflow.com/questions/43104114/cannot-find-name-require-after-upgr
 
 https://github.com/davidmanangan/pouchdb-angular4/tree/master/src
 
-## Pakages
 
-### Sass
-`npm install node-sass --save`
-
-#### typings
-`npm install typings -g`
-
-#### Pouchdb
-```
-npm install pouchdb --save
-typings install dt~require --save --global
-```
 
 
 #### TODO
