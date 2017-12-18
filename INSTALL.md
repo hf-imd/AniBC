@@ -5,6 +5,9 @@
 ### Sass
 `npm install node-sass --save`
 
+### Font Awesome
+ `npm install --save font-awesome angular-font-awesome`
+
 
 #### Pouchdb
 `npm install pouchdb --save`

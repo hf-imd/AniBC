@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "anibet"
+    "name": "anibc"
   },
   "apps": [
     {
@@ -19,9 +19,11 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "sass/styles.scss"
+        "sass/styles.scss",
+        "../node_modules/font-awesome/scss/font-awesome.scss"
       ],
       "scripts": [],
+
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
@@ -53,6 +55,7 @@
       "config": "./karma.conf.js"
     }
   },
+
   "defaults": {
     "styleExt": "scss",
     "component": {
