@@ -1,5 +1,4 @@
 import {Component, NgZone} from '@angular/core';
-import {PouchdbService} from './pouchdb.service';
 
 @Component({
     selector: 'app-root',
@@ -10,17 +9,9 @@ export class AppComponent {
     title = 'AniBC';
 
 
-    public constructor( private database: PouchdbService, private zone: NgZone ) {
-
-
-
+    public constructor() {
 
     }
-
-    public ngOnInit() {
-
-    }
-
 
 
 

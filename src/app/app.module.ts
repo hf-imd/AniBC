@@ -13,6 +13,8 @@ import {FooterComponent} from './footer/footer.component';
 import {AngularFontAwesomeModule} from "angular-font-awesome/out-tsc/lib-es2015";
 import {DataService} from "./services/data.service";
 import {ConfigService} from "./services/config.service";
+import {FileUploadModule} from 'ng2-file-upload';
+import {FileSizeModule} from 'ngx-filesize';
 
 
 @NgModule({
@@ -24,17 +26,21 @@ import {ConfigService} from "./services/config.service";
         AdminBoardComponent,
         MovieCanvasComponent,
         NavigationComponent,
-        FooterComponent
+        FooterComponent,
+
     ],
     imports: [
         BrowserModule,
         FormsModule,
-        AngularFontAwesomeModule
+        AngularFontAwesomeModule,
+        FileUploadModule,
+        FileSizeModule,
     ],
     providers: [
         PouchdbService,
         DataService,
-        ConfigService
+        ConfigService,
+
     ],
     bootstrap: [AppComponent]
 })

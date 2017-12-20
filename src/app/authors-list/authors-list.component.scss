@@ -1,0 +1,46 @@
+$color-author-button: #d6d6d6;
+$color-author-button-hover: #b4b3b1;
+$color-author-button-active: #e8c6ff;
+$color-author-butto-selected: #7affec;
+
+.authors-list {
+
+  ul {
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    max-width: 200px;
+  }
+}
+
+.author-button {
+  padding: 10px;
+  margin: 0px;
+  background-color: $color-author-button;
+  cursor: pointer;
+}
+
+.author-button {
+
+  &:hover {
+    background-color: $color-author-button-hover;
+
+  }
+
+  &:active {
+    background-color: $color-author-button-active;
+
+  }
+
+  .selected {
+
+    background-color: $color-author-butto-selected;
+
+  }
+
+}

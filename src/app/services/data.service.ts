@@ -5,11 +5,8 @@ import {ConfigService} from "./config.service";
 @Injectable()
 export class DataService {
 
-    private database: PouchdbService;
-    private zone: NgZone;
-    private config : ConfigService;
-
-    constructor() {
+    constructor( private database: PouchdbService, private zone: NgZone, private config: ConfigService
+) {
 
         //  this.database.sync('https://www:imd2017@anibc.smileupps.com/anibc');
         this.database.sync('http://127.0.0.1:5984/anibc');
@@ -28,6 +25,10 @@ export class DataService {
         }, error => {
             console.error(error);
         });
+    }
+
+    public put(id: string, document: any) {
+      return  this.database.put(id, document);
     }
 
 }

@@ -1,0 +1,25 @@
+.admin-board {
+
+  max-width: 400px;
+  padding: 20px;
+
+}
+
+.file-drop-zone {
+  border: dotted 3px lightgray;
+  padding: 20px;
+  text-align: center
+}
+
+.nv-file-over {
+  border: dotted 3px red;
+}
+
+/* Default class applied to drop zones on over */
+.another-file-over-class {
+  border: dotted 3px green;
+}
+
+table.file-upload{
+ font-size: 0.8em;
+}

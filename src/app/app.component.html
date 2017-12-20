@@ -1,25 +1,48 @@
-<h1> {{ title }} </h1>
+<div id="anibc">
+    <h1> {{ title }} </h1>
 
 
-<!-- Navigation -->
-<app-navigation></app-navigation>
+    <header>
+        <nav id="nav-main">
 
-<!-- Alphabet List -->
-<app-alphabet-list></app-alphabet-list>
+            <!-- Navigation -->
+            <app-navigation></app-navigation>
 
-<!-- Author List -->
-<app-authors-list></app-authors-list>
+        </nav>
+        <nav id="nav-chars">
+
+            <!-- Alphabet List -->
+            <app-alphabet-list></app-alphabet-list>
+
+        </nav>
+    </header>
+
+    <main>
+        <nav id="nav-authors">
+
+            <!-- Author List -->
+            <app-authors-list></app-authors-list>
+
+        </nav>
+
+        <div id="content">
+
+            <!-- Admin Board-->
+            <app-admin-board></app-admin-board>
+
+            <!-- Movie Canvas-->
+            <app-movie-canvas></app-movie-canvas>
+
+        </div>
+    </main>
+
+    <footer>
+
+        <!-- Footer-->
+        <app-footer></app-footer>
 
 
-<!-- Movie Canvas-->
-<app-movie-canvas></app-movie-canvas>
-
-<!-- Admin Board-->
-<app-admin-board></app-admin-board>
-
-<!-- Footer-->
-<app-footer></app-footer>
+    </footer>
 
 
-
-
+</div>

@@ -1,23 +1,56 @@
-.admin-board{
+
+body {
+  font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+
+}
+
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700');
+@import url('https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css');
+
+@import 'buttons';
+@import 'forms';
+
+
+#anibc{
+  margin: 20px;
+  padding: 10px
+;
+}
+
+.admin-board {
   border: 1px solid #486d9f;
 }
 
-.alphabet-list{
+.alphabet-list {
   border: 1px solid #339f5d;
 }
-.authors-list{
+
+.authors-list {
   border: 1px solid #38439c;
 
 }
-.upload-form{
+
+.upload-form {
   border: 1px solid #98279c;
 
 }
-.footer{
+
+.footer {
   border: 1px solid #b6483a;
 
 }
-.movie-canvas{
+
+.movie-canvas {
   border: 1px solid #b68e3d;
 
+}
+
+app-footer,
+app-movie-canvas,
+app-admin-board {
+  width: 100%;
+}
+
+app-footer {
+  text-align: center;
 }

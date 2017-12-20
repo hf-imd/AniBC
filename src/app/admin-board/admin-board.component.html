@@ -1,22 +1,186 @@
 <div class="admin-board">
 
-    <input type="text" placeholder="Buchstabe" [(ngModel)]="form.anichar"/>
-    <input type="text" placeholder="Author" [(ngModel)]="form.author"/>
-    <input type="text" placeholder="Version" [(ngModel)]="form.version"/>
-    <button (click)="insert()">Add</button>
-    <br/>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let anichar of anichars">
-            <td>{{ anichar.anichar }}</td>
-        </tr>
-        </tbody>
-    </table>
+    <h1>Film hinzufügen</h1>
+
+    <p> Der Film muss ein .mp4 sein und darf nicht grösser als 400KB sein.
+        Hier die Anleitung für die einfache und korrekte Dateigrösse.</p>
+
+    <div class="">
+        <form>
+
+            <!-- First Name -->
+            <div class="form-group">
+                <label>Vorname</label>
+                <input type="text"
+                       class="form-control"
+                       placeholder="Vorname"
+                       name="first_name"
+                       [(ngModel)]="model.first_name"/>
+            </div>
+
+            <!-- Last Name -->
+            <div class="form-group">
+                <label>Nachname</label>
+                <input type="text"
+                       class="form-control"
+                       placeholder="Nachname"
+                       name="last_name"
+                       [(ngModel)]="model.last_name"/>
+            </div>
+
+            <!-- organistion -->
+            <div class="form-group">
+                <label for="admin-form-organisation"> Organisation </label>
+                <select id="admin-form-organisation"
+                        name="organisation"
+                        class="form-control"
+                        [(ngModel)]="model.organisation">
+                    <option value="option-1">bitte wählen</option>
+                    <option value="option-2">HF VK</option>
+                    <option value="option-3">HF IMD</option>
+                </select>
+
+            </div>
+
+            <!-- anichar -->
+            <div class="form-group">
+                <label>Buchstabe</label>
+                <input type="text"
+                       class="form-control"
+                       placeholder="Buchstabe"
+                       maxlength="2"
+                       name="anichar"
+                       [(ngModel)]="model.anichar"/>
+            </div>
+
+            <!-- version -->
+            <div class="form-group">
+                <label>Version
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Version"
+                           name="version"
+                           [(ngModel)]="model.version"/>
+                </label>
+
+            </div>
+
+            <!-- sound -->
+            <div class="form-check">
+
+                <label class="form-check-label">
+                    <input type="checkbox"
+                           class="form-check-input"
+                           name="sound"
+                           [(ngModel)]="model.sound"/>
+                    mit Ton ?
+                </label>
+            </div>
+
+
+            <!-- long -->
+            <div class="form-check">
+
+                <label class="form-check-label">
+                    <input type="checkbox"
+                           class="form-check-input"
+                           name="long" [(ngModel)]="model.long"/>
+                    länger als 5 sek ?
+                </label>
+            </div>
+
+
+            <p>Dateien: {{ uploader?.queue?.length }}</p>
+
+            <div ng2FileDrop
+                 [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+                 (fileOver)="fileOverBase($event)"
+                 [uploader]="uploader"
+                 (onFileDrop)="checkFiles($event)"
+                 class="file-drop-zone">
+                <ul>
+                    <li *ngFor="let messages of dropzoneinfo">{{messages}}</li>
+                </ul>            </div>
+            <div>
+                <ul>
+                    <li *ngFor="let messages of feedback">{{messages}}</li>
+                </ul>
+            </div>
+
+
+            <div class="table file-upload">
+
+
+                <div *ngFor="let item of uploader.queue">
+
+                    <!-- Name -->
+                    <div>{{ item?.file?.name }}</div>
+
+                    <!-- Size -->
+                    <span *ngIf="uploader.options.isHTML5" nowrap>{{ item?.file?.size| filesize }}</span>
+
+                    <!-- Progress -->
+                    <span *ngIf="uploader.options.isHTML5">
+                        <div class="progress" style="margin-bottom: 0;">
+                            <div class="progress-bar" role="progressbar"
+                                 [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                        </div>
+                    </span>
+
+                    <!-- Status -->
+                    <span class="text-center">
+
+                        <span *ngIf="item.isSuccess"><i class="fa fa-ok"></i></span>
+                        <span *ngIf="item.isCancel"><i class="fa fa-ban-circle"></i></span>
+                        <span *ngIf="item.isError"><i class="fa fa-remove"></i></span>
+                    </span>
+
+                    <!-- Actions -->
+                    <span nowrap>
+                        <!--                    <button type="button" class="btn btn-success btn-sm"
+                                                    (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                                                <i class="fa fa-upload"></i>
+                                            </button>-->
+                        <!--                    <button type="button" class="btn btn-warning btn-xs"
+                                                    (click)="item.cancel()" [disabled]="!item.isUploading">
+                                                <i class="fa fa-circle"></i> cancel
+                                            </button>-->
+                        <button type="button" class="btn btn-danger btn-sm"
+                                (click)="item.remove()">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+
+            <div>
+                <div>
+                    <div class="progress" style="">
+                        <div class="progress-bar" role="progressbar"
+                             [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                    </div>
+                </div>
+                <!--            <button type="button" class="btn btn-success btn-sm"
+                                    (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                                <i class="fa fa-upload"></i> Alle hochladen
+                            </button>-->
+                <!--            <button type="button" class="btn btn-warning btn-sm"
+                                    (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+                                <i class="fa fa-circle"></i>
+                            </button>-->
+                <!--            <button type="button" class="btn btn-danger btn-sm"
+                                    (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                                <i class="fa fa-trash"></i> Alle entfernen
+                            </button>-->
+            </div>
+
+
+            <!-- Submit -->
+            <button class="btn btn-primary" (click)="onSubmit()">Hochladen und Speichern</button>
+
+
+        </form>
+
+    </div>
 
 </div>

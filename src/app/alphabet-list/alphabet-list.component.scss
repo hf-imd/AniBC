@@ -1,0 +1,46 @@
+$color-char-button: #d6d6d6;
+$color-char-button-hover: #b4b3b1;
+$color-char-button-active: #e8c6ff;
+$color-char-butto-selected: #7affec;
+
+.alphabet-list {
+
+  ul {
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: inline-flex;
+  }
+}
+
+.char-button {
+  padding: 10px;
+  margin: 0px;
+  background-color: $color-char-button;
+  cursor: pointer;
+}
+
+.char-button {
+
+  &:hover {
+    background-color: $color-char-button-hover;
+
+  }
+
+  &:active {
+    background-color: $color-char-button-active;
+
+  }
+
+  .selected {
+
+    background-color: $color-char-butto-selected;
+
+  }
+
+}
