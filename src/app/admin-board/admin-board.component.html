@@ -59,6 +59,7 @@
                     <input type="text"
                            class="form-control"
                            placeholder="Version"
+                           maxlength="10"
                            name="version"
                            [(ngModel)]="model.version"/>
                 </label>
@@ -100,7 +101,8 @@
                  class="file-drop-zone">
                 <ul>
                     <li *ngFor="let messages of dropzoneinfo">{{messages}}</li>
-                </ul>            </div>
+                </ul>
+            </div>
             <div>
                 <ul>
                     <li *ngFor="let messages of feedback">{{messages}}</li>
@@ -177,7 +179,8 @@
 
             <!-- Submit -->
             <button class="btn btn-primary" (click)="onSubmit()">Hochladen und Speichern</button>
-
+            <div >{{form_feedback}}</div>
+            <div >{{form_feedback_video}}</div>
 
         </form>
 

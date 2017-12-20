@@ -36,6 +36,8 @@ export class AdminBoardComponent {
     public pdf_file: number = 0;
     public video_file: number = 0;
     public dropzoneinfo: any = [];
+    public form_feedback: string = '';
+    public form_feedback_video: string = '';
 
 
     constructor(private dataService: DataService, private zone: NgZone, private config: ConfigService) {
@@ -57,7 +59,7 @@ export class AdminBoardComponent {
     }
 
 
-    public checkFiles($event) {
+    public checkFiles() {
 
         console.log('checkFiles');
 
@@ -72,8 +74,9 @@ export class AdminBoardComponent {
             this.feedback = 0;
 
             let dropzoneinfo = this.dropzoneinfo;
-
-
+            let form_feedback_video = this.form_feedback_video;
+            let filename_video: string = '';
+            let filename_doku: string = '';
             this.uploader.queue.forEach(function (item, index) {
 
 
@@ -86,17 +89,21 @@ export class AdminBoardComponent {
                 }
 
                 let type: string = item.file.type;
+                let name: string = item.file.name;
+
                 switch (type) {
 
                     case  "video/mp4":
                         status = true;
                         dropzoneinfo[0] = 'Video OK';
-
+                        form_feedback_video = '';
+                        filename_video = name;
                         break;
 
                     case  "application/pdf":
                         dropzoneinfo[1] = 'PDF OK';
                         status = true;
+                        filename_doku = name;
                         break;
 
 
@@ -115,8 +122,13 @@ export class AdminBoardComponent {
             });
             this.feedback = message;
             this.dropzoneinfo = dropzoneinfo;
+            this.form_feedback_video = form_feedback_video;
+
+            this.model.filename_video = filename_video;
+            this.model.filename_doku = filename_doku;
             console.log(message);
 
+            return status;
         }
 
     }
@@ -124,25 +136,32 @@ export class AdminBoardComponent {
     public onSubmit() {
 
 
-        this.submitted = true;
+        if (this.checkFiles() === false) {
+
+            this.form_feedback_video = 'Bitte Video-Datei hinzufügen';
+
+        } else {
+
+            this.submitted = true;
 
 
-        //  this.uploader.uploadAll();
+            this.uploader.uploadAll();
 
 
-        if (this.model.version == '') {
-            this.model.version = '1';
-        }
+            if (this.model.version == '') {
+                this.model.version = '1';
+            }
 
-        if (this.model.anichar) {
+            if (this.model.anichar) {
 
-            let uuid = UUID.UUID();
-            const id = this.config.prefix_char + this.model.anichar + '-v_' + this.model.version + '-' + uuid; // HACK: this is an bad idea.
-
-
-            //  this.dataService.put(id, this.model);
+                let uuid = UUID.UUID();
+                const id = this.config.prefix_char + this.model.anichar + '-v_' + this.model.version + '-' + uuid; // HACK: this is an bad idea.
 
 
+                this.dataService.put(id, this.model);
+
+
+            }
         }
     }
 }
