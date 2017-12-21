@@ -1,54 +1,19 @@
 <?php
 // show error reporting
+error_reporting(E_ALL);
 
 
-$http_origin = $_SERVER['HTTP_ORIGIN'];
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
 
-$server = $_SERVER['SERVER_NAME'];
+const DEBUG = true;
 
-
-$allowed_domains = array(
-    'localhost:4200',
-    'anibc.local',
-    'http://anibc.local',
-    'http://localhost:4200',
-    'https://localhost:4200',
-    'http://mollo.ch',
-    'https://mollo.ch',
-);
-
-if ($server === 'mollo.ch') {
-    $dir_root = '/home/oliver14/www/mollo.ch/anibc';
-} else {
-    $dir_root = '/Users/ost/MAMP/anibc';
-}
-
-
-    if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-
-      if (in_array($http_origin, $allowed_domains)) {
-        header("Access-Control-Allow-Origin: $http_origin");
-
-      header('Access-Control-Allow-Methods: POST, GET, DELETE, PUT, PATCH, OPTIONS');
-      header('Access-Control-Allow-Headers: token, Content-Type');
-      header('Access-Control-Max-Age: 1728000');
-      header('Content-Length: 0');
-      header('Content-Type: text/plain');
-        }
-      die();
-    }
-
-if (in_array($http_origin, $allowed_domains)) {
-
-
-  header("Access-Control-Allow-Origin: $http_origin");
-  header('Content-Type: application/json');
-
-  authenticate($users);
-
-}
-
-
+/** ==================================
+ *
+ * USER LIST
+ *
+ * ================================== */
 
 $users = [
     0 => [
@@ -67,6 +32,13 @@ $users = [
     ]
 
 ];
+
+
+/** ==================================
+ *
+ * Functions
+ *
+ * ================================== */
 
 
 function getAll()
@@ -113,8 +85,12 @@ function delete()
 
 function authenticate($users)
 {
-  $username = $_POST['username'];
-  $password = $_POST['password'];
+
+    $content = json_decode(file_get_contents('php://input'), true);
+
+    $username = $content['username'];
+    $password = $content['password'];
+
     $length = 78;
     $status = false;
     $user = false;
@@ -122,14 +98,15 @@ function authenticate($users)
 
 // find if any user matches login credentials
     foreach ($users as $_user) {
+        echo $_user['username'];
 
         if ($_user['username'] === $username && $_user['password'] === $password) {
-
             $user = $_user;
+            $status = true;
             try {
                 $token = bin2hex(random_bytes($length));
             } catch (
-                Exception $e) {
+            Exception $e) {
                 die();
             }
 
@@ -140,7 +117,7 @@ function authenticate($users)
 
     if ($status === true) {
         // if login details are valid return 200 OK with user details and  token
-     //   http_send_status(200);
+        //   http_send_status(200);
 
         echo json_encode([
                 'user' => $user,
@@ -151,37 +128,17 @@ function authenticate($users)
 
     } else {
         // else return 400 bad request
-   //     http_send_status(400);
+        //   http_send_status(400);
         echo json_encode([
                 'user' => false,
                 "token" => false,
-                "message" => 'Benutzername oder Passwort falsch']
+                "message" => 'Benutzername oder Passwort falsch',
+                'debug' => debuginfo()
+            ]
 
         );
 
     }
-}
-
-
-
-if (isset($_POST) ) {
-
-}
-elseif (isset($_GET['id']) && !empty($_GET['id'])) {
-
-    $id = sanitizeString($_GET['id']);
-
-
-    echo json_encode([
-            'status' => true,
-            "message" => $id]
-    );
-}
-else{
-    echo json_encode([
-            'status' => true,
-            "message" => 'users']
-    );
 }
 
 
@@ -194,4 +151,123 @@ function sanitizeString($var)
     return $var;
 }
 
+function debuginfo($info = '')
+{
+    if (DEBUG) {
 
+        return [
+            'info' => $info,
+            'http_origi' => $_SERVER['HTTP_ORIGIN'],
+            'server' => $_SERVER['SERVER_NAME'],
+            '_GET' => $_GET,
+            '_POST' => $_POST,
+        ];
+
+    } else {
+        return 'Debug off';
+    }
+}
+
+
+/** ==================================
+ *
+ * Cors
+ *
+ * ================================== */
+
+
+$allowed_domains = array(
+    'localhost:4200',
+    'anibc.local',
+    'http://anibc.local',
+    'http://localhost:4200',
+    'https://localhost:4200',
+    'http://mollo.ch',
+    'https://mollo.ch',
+);
+
+
+$http_origin = $_SERVER['HTTP_ORIGIN'];
+$server = $_SERVER['SERVER_NAME'];
+
+if ($server === 'mollo.ch') {
+    $dir_root = '/home/oliver14/www/mollo.ch/anibc';
+} else {
+    $dir_root = '/Users/ost/MAMP/anibc';
+}
+
+
+// REQUEST OPTIONS
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+
+
+    if (in_array($http_origin, $allowed_domains)) {
+        header("Access-Control-Allow-Origin: $http_origin");
+        header('Access-Control-Allow-Methods: POST, GET, DELETE, PUT, PATCH, OPTIONS');
+        header('Access-Control-Allow-Headers: token, Content-Type');
+        //    header('Access-Control-Max-Age: 1728000');
+        header('Content-Length: 0');
+        header('Content-Type: text/plain');
+    }
+
+    die();
+}
+
+
+// REQUEST POST
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+
+    if (in_array($http_origin, $allowed_domains)) {
+
+
+        header("Access-Control-Allow-Origin: $http_origin");
+        header('Content-Type: application/json');
+
+
+        if (!empty(file_get_contents('php://input'))) {
+
+
+            authenticate($users);
+
+        } else {
+
+
+            echo json_encode([
+                'status' => false,
+                "message" => 'Error',
+                'error' => 'Empty Value',
+                'debug' => debuginfo('_POST'),
+                'postdata' => $request
+            ]);
+        }
+    }
+}
+
+
+// REQUEST GET
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+
+
+    if (isset($_GET['id']) && !empty($_GET['id'])) {
+
+        $id = sanitizeString($_GET['id']);
+
+        echo json_encode([
+            'status' => true,
+            "message" => $id]);
+    } else {
+
+        echo json_encode([
+                'status' => false,
+                "message" => 'Error',
+                'error' => 'Empty Value',
+                'debug' => debuginfo('_GET')
+            ]
+        );
+    }
+
+}

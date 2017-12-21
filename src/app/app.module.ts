@@ -28,7 +28,7 @@ import {JwtInterceptor} from "./_helpers/jwt.interceptor";
 
 const AppRoutes: Routes = [
     {
-        path: '',
+        path: 'anibc',
         component: MovieCanvasComponent
     },
     {
