@@ -1,3 +1,5 @@
+import {RouterModule} from "@angular/router";
+import {AppRoutingModule} from './app-routing.module';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
@@ -11,10 +13,12 @@ import {MovieCanvasComponent} from './movie-canvas/movie-canvas.component';
 import {NavigationComponent} from './navigation/navigation.component';
 import {FooterComponent} from './footer/footer.component';
 import {AngularFontAwesomeModule} from "angular-font-awesome/out-tsc/lib-es2015";
-import {DataService} from "./services/data.service";
-import {ConfigService} from "./services/config.service";
+import {DataService} from "./_services/data.service";
+import {ConfigService} from "./_services/config.service";
 import {FileUploadModule} from 'ng2-file-upload';
 import {FileSizeModule} from 'ngx-filesize';
+import {AlertComponent} from './_directives/alert/alert.component';
+import {LoginComponent} from './login/login.component';
 
 
 @NgModule({
@@ -27,6 +31,8 @@ import {FileSizeModule} from 'ngx-filesize';
         MovieCanvasComponent,
         NavigationComponent,
         FooterComponent,
+        AlertComponent,
+        LoginComponent,
 
     ],
     imports: [
@@ -35,6 +41,9 @@ import {FileSizeModule} from 'ngx-filesize';
         AngularFontAwesomeModule,
         FileUploadModule,
         FileSizeModule,
+        AppRoutingModule,
+        RouterModule.forRoot(routes)
+
     ],
     providers: [
         PouchdbService,

@@ -7,10 +7,10 @@
  *
  */
 import {Component, NgZone} from '@angular/core';
-import {ConfigService} from "../services/config.service";
-import {Anichar} from "../anichar";
+import {ConfigService} from "../_services/config.service";
+import {Anichar} from "../_models/anichar";
 import {UUID} from 'angular2-uuid';
-import {DataService} from "../services/data.service";
+import {DataService} from "../_services/data.service";
 import {FileUploader} from 'ng2-file-upload';
 import {forEach} from "@angular/router/src/utils/collection";
 

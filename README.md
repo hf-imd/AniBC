@@ -3,7 +3,7 @@
 The Animated ABC by HF St.Gallen
 
 
-## Author Oliver Steiner, oliver@mollo.ch
+## written by Oliver Steiner, oliver@mollo.ch
 
 
 
@@ -40,9 +40,9 @@ Puchdb
 https://blog.couchbase.com/using-couchbase-mobile-in-a-web-application-with-only-angular-2-and-pouchdb/
 https://github.com/davidmanangan/pouchdb-angular4/tree/master/src
 
+User Registration and Login
+http://jasonwatmore.com/post/2016/09/29/angular-2-user-registration-and-login-example-tutorial
 
-using require in angualr
-https://stackoverflow.com/questions/43104114/cannot-find-name-require-after-upgrading-to-angular4
 
 
 

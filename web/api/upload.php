@@ -15,13 +15,24 @@ error_reporting(E_ALL);
 
 $http_origin = $_SERVER['HTTP_ORIGIN'];
 
+$server = $_SERVER['SERVER_NAME'];
+
+
 $allowed_domains = array(
     'localhost:4200',
     'anibc.local',
     'http://anibc.local',
     'http://localhost:4200',
     'https://localhost:4200',
+    'http://mollo.ch',
+    'https://mollo.ch',
 );
+
+if ($server === 'mollo.ch') {
+    $dir_root = '/home/oliver14/www/mollo.ch/anibc';
+} else {
+    $dir_root = '/Users/ost/MAMP/anibc';
+}
 
 if (in_array($http_origin, $allowed_domains)) {
     header("Access-Control-Allow-Origin: $http_origin");
@@ -38,14 +49,16 @@ include('src/class.upload.php');
 // we first include the upload class, as we will need it here to deal with the uploaded file
 
 // set variables
-$dir_movies = '/Users/ost/MAMP/anibc/web/files/movies';
-$dir_docs = '/Users/ost/MAMP/anibc/web/files/docs';
+
+
+$dir_movies = $dir_root . '/web/files/movies';
+$dir_docs = $dir_root . '/web/files/docs';
 
 
 if (!is_writable($dir_movies)) {
     echo json_encode(array(
         'status' => false,
-        'msg' => 'Destination directory not writable.'
+        'message' => 'Destination directory not writable.'
     ));
     exit;
 }
@@ -86,7 +99,7 @@ if ($handle->uploaded) {
 
         echo json_encode(array(
             'status' => true,
-            'msg' => 'File uploaded with success.',
+            'message' => 'File uploaded with success.',
             'file' => $filename,
             'filesize' => $filesize
 
@@ -96,7 +109,7 @@ if ($handle->uploaded) {
 
         echo json_encode(array(
             'status' => false,
-            'msg' => 'File not uploaded to the wanted location.',
+            'message' => 'File not uploaded to the wanted location.',
             'error' => $handle->error
         ));
     }
@@ -110,8 +123,7 @@ if ($handle->uploaded) {
 
     echo json_encode(array(
         'status' => false,
-        'msg' => 'File not uploaded on the server.',
+        'message' => 'File not uploaded on the server.',
         'error' => $handle->error
-
     ));
 }
