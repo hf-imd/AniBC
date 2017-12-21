@@ -1,7 +1,7 @@
 <div id="anibc">
     <h1> {{ title }} </h1>
 
-      <alert></alert>
+      <app-alert></app-alert>
 
     <header>
         <nav id="nav-main">
@@ -28,11 +28,7 @@
 
         <div id="content">
 
-            <!-- Admin Board-->
-            <app-admin-board></app-admin-board>
-
-            <!-- Movie Canvas-->
-            <app-movie-canvas></app-movie-canvas>
+             <router-outlet></router-outlet>
 
         </div>
     </main>
@@ -45,6 +41,19 @@
 
     </footer>
 
-     <router-outlet></router-outlet>
+    <nav>
+        <ul>
+            <li>
+                <a routerLink="/" routerLinkActive="active" >Home</a>
+            </li>
+            <li>
+                <a routerLink="/login" routerLinkActive="active" >Login</a>
+            </li>
+            <li>
+                <a routerLink="/admin" routerLinkActive="active" >Admin</a>
+            </li>
+        </ul>
+    </nav>
+
 
 </div>

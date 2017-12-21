@@ -1,5 +1,4 @@
-import {RouterModule} from "@angular/router";
-import {AppRoutingModule} from './app-routing.module';
+import {RouterModule, Routes} from "@angular/router";
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
@@ -19,6 +18,25 @@ import {FileUploadModule} from 'ng2-file-upload';
 import {FileSizeModule} from 'ngx-filesize';
 import {AlertComponent} from './_directives/alert/alert.component';
 import {LoginComponent} from './login/login.component';
+import {AlertService} from "./_services/alert.service";
+import {AuthenticationService} from "./_services/authentication.service";
+import { AdminComponent } from './admin/admin.component';
+import {HttpClient} from "@angular/common/http";
+
+const AppRoutes: Routes = [
+    {
+        path: '',
+        component: MovieCanvasComponent
+    },
+    {
+        path: 'login',
+        component: LoginComponent
+    },
+    {
+        path: 'admin',
+        component: AdminBoardComponent
+    }
+];
 
 
 @NgModule({
@@ -33,6 +51,7 @@ import {LoginComponent} from './login/login.component';
         FooterComponent,
         AlertComponent,
         LoginComponent,
+        AdminComponent,
 
     ],
     imports: [
@@ -41,14 +60,15 @@ import {LoginComponent} from './login/login.component';
         AngularFontAwesomeModule,
         FileUploadModule,
         FileSizeModule,
-        AppRoutingModule,
-        RouterModule.forRoot(routes)
+        RouterModule.forRoot(AppRoutes)
 
     ],
     providers: [
         PouchdbService,
         DataService,
         ConfigService,
+        AlertService,
+        AuthenticationService,
 
     ],
     bootstrap: [AppComponent]
