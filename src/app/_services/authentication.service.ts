@@ -13,20 +13,20 @@ export class AuthenticationService {
     }
 
     login(username: string, password: string) {
-        let path = this.config.getPath() + '/api/users';
+        let path = this.config.getPath() + '/api/users/';
 
         console.log(path);
 
         return this.http.post<any>(path,
             {username: username, password: password}).map(
-            user => {
+            data => {
                 // login successful if there's a jwt token in the response
-                if (user && user.token) {
+                if (data && data.token) {
 
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    localStorage.setItem('currentUser', JSON.stringify(data.user));
                 }
-                return user;
+                return data;
             }
         )
     };

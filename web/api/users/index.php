@@ -23,14 +23,30 @@ if ($server === 'mollo.ch') {
     $dir_root = '/Users/ost/MAMP/anibc';
 }
 
-if (in_array($http_origin, $allowed_domains)) {
-    header("Access-Control-Allow-Origin:$http_origin");
-}
 
-header("Access-Control-Allow-Credentials: true");
-header('Access-Control-Request-Headers: content-type');
-header('Access-Control-Allow-Methods: HEAD, GET, POST');
-header("Content-type: application/json; charset=utf-8");
+    if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+
+      if (in_array($http_origin, $allowed_domains)) {
+        header("Access-Control-Allow-Origin: $http_origin");
+
+      header('Access-Control-Allow-Methods: POST, GET, DELETE, PUT, PATCH, OPTIONS');
+      header('Access-Control-Allow-Headers: token, Content-Type');
+      header('Access-Control-Max-Age: 1728000');
+      header('Content-Length: 0');
+      header('Content-Type: text/plain');
+        }
+      die();
+    }
+
+if (in_array($http_origin, $allowed_domains)) {
+
+
+  header("Access-Control-Allow-Origin: $http_origin");
+  header('Content-Type: application/json');
+
+  authenticate($users);
+
+}
 
 
 
@@ -95,8 +111,10 @@ function delete()
 }
 
 
-function authenticate($users, $username, $password)
+function authenticate($users)
 {
+  $username = $_POST['username'];
+  $password = $_POST['password'];
     $length = 78;
     $status = false;
     $user = false;
@@ -145,16 +163,10 @@ function authenticate($users, $username, $password)
 }
 
 
-if (isset($_POST['username']) && !empty($_POST['username'])) {
 
-    $username = sanitizeString($_POST['username']);
-    $password = sanitizeString($_POST['password']);
-
-      authenticate($users, $username, $password);
-
+if (isset($_POST) ) {
 
 }
-
 elseif (isset($_GET['id']) && !empty($_GET['id'])) {
 
     $id = sanitizeString($_GET['id']);

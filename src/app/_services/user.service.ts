@@ -12,7 +12,7 @@ export class UserService {
 
     }
     public getAll(){
-        return this.http.get<User[]>(this.config.localpath+'/api/users');
+        return this.http.get<User[]>(this.config.localpath+'/api/users/');
 
     }
 
@@ -21,7 +21,7 @@ export class UserService {
     }
 
     create(user: User) {
-        return this.http.post(this.config.localpath+'/api/users', user);
+        return this.http.post(this.config.localpath+'/api/users/', user);
     }
 
     update(user: User) {
