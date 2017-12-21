@@ -41,6 +41,7 @@ if (in_array($http_origin, $allowed_domains)) {
 header("Access-Control-Allow-Credentials: true");
 header('Access-Control-Allow-Methods: GET, POST');
 header('Access-Control-Allow-Headers: X-Requested-With, Content-Type, X-Auth-Token');
+header("Content-type: application/json; charset=utf-8");
 
 
 include('src/class.upload.php');
