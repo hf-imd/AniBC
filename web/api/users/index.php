@@ -1,14 +1,37 @@
 <?php
 // show error reporting
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
 
 
-// required headers
-header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset=UTF-8");
-header('Access-Control-Allow-Methods: GET, POST');
-header('Access-Control-Allow-Headers: X-Requested-With, Content-Type, X-Auth-Token');
+$http_origin = $_SERVER['HTTP_ORIGIN'];
+
+$server = $_SERVER['SERVER_NAME'];
+
+
+$allowed_domains = array(
+    'localhost:4200',
+    'anibc.local',
+    'http://anibc.local',
+    'http://localhost:4200',
+    'https://localhost:4200',
+    'http://mollo.ch',
+    'https://mollo.ch',
+);
+
+if ($server === 'mollo.ch') {
+    $dir_root = '/home/oliver14/www/mollo.ch/anibc';
+} else {
+    $dir_root = '/Users/ost/MAMP/anibc';
+}
+
+if (in_array($http_origin, $allowed_domains)) {
+    header("Access-Control-Allow-Origin:$http_origin");
+}
+
+header("Access-Control-Allow-Credentials: true");
+header('Access-Control-Request-Headers: content-type');
+header('Access-Control-Allow-Methods: HEAD, GET, POST');
+header("Content-type: application/json; charset=utf-8");
+
 
 
 $users = [
@@ -99,9 +122,9 @@ function authenticate($users, $username, $password)
 
     if ($status === true) {
         // if login details are valid return 200 OK with user details and  token
-        http_send_status(200);
+     //   http_send_status(200);
 
-        return json_encode([
+        echo json_encode([
                 'user' => $user,
                 "token" => $token,
                 "message" => 'Login OK']
@@ -110,8 +133,8 @@ function authenticate($users, $username, $password)
 
     } else {
         // else return 400 bad request
-        http_send_status(400);
-        return json_encode([
+   //     http_send_status(400);
+        echo json_encode([
                 'user' => false,
                 "token" => false,
                 "message" => 'Benutzername oder Passwort falsch']
@@ -132,8 +155,7 @@ if (isset($_POST['username']) && !empty($_POST['username'])) {
 
 }
 
-
-if (isset($_GET['id']) && !empty($_GET['id'])) {
+elseif (isset($_GET['id']) && !empty($_GET['id'])) {
 
     $id = sanitizeString($_GET['id']);
 
@@ -141,6 +163,12 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
     echo json_encode([
             'status' => true,
             "message" => $id]
+    );
+}
+else{
+    echo json_encode([
+            'status' => true,
+            "message" => 'users']
     );
 }
 

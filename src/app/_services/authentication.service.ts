@@ -2,24 +2,27 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/operator/map";
+import {ConfigService} from "./config.service";
 
 
 @Injectable()
 export class AuthenticationService {
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private config: ConfigService) {
 
     }
 
     login(username: string, password: string) {
+        let path = this.config.getPath() + '/api/users';
 
-        return this.http.post<any>('api/user.php',
+        console.log(path);
+
+        return this.http.post<any>(path,
             {username: username, password: password}).map(
             user => {
                 // login successful if there's a jwt token in the response
                 if (user && user.token) {
 
-              //  if (user) {  // TODO add user.token
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('currentUser', JSON.stringify(user));
                 }

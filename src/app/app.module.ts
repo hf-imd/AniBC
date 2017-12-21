@@ -21,7 +21,10 @@ import {LoginComponent} from './login/login.component';
 import {AlertService} from "./_services/alert.service";
 import {AuthenticationService} from "./_services/authentication.service";
 import { AdminComponent } from './admin/admin.component';
-import {HttpClient} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
+import {AuthGuard} from "./_helpers/auth.guard";
+import {UserService} from "./_services/user.service";
+import {JwtInterceptor} from "./_helpers/jwt.interceptor";
 
 const AppRoutes: Routes = [
     {
@@ -60,7 +63,9 @@ const AppRoutes: Routes = [
         AngularFontAwesomeModule,
         FileUploadModule,
         FileSizeModule,
-        RouterModule.forRoot(AppRoutes)
+        RouterModule.forRoot(AppRoutes),
+        HttpClientModule,
+
 
     ],
     providers: [
@@ -69,6 +74,13 @@ const AppRoutes: Routes = [
         ConfigService,
         AlertService,
         AuthenticationService,
+        AuthGuard,
+        UserService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: JwtInterceptor,
+            multi: true
+        },
 
     ],
     bootstrap: [AppComponent]
