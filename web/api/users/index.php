@@ -1,37 +1,16 @@
 <?php
-// show error reporting
-error_reporting(E_ALL);
-
 
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
-const DEBUG = true;
+$users = [];  // fill in config.inc
+$allowed_domains = [];  // fill in config.inc
+$dir_root= '';  // fill in config.inc
 
-/** ==================================
- *
- * USER LIST
- *
- * ================================== */
+require_once ('config.inc');
 
-$users = [
-    0 => [
-        'id' => 1,
-        'username' => 'admin',
-        'password' => 'admin',
-        'firstname' => 'Administrator',
-        'lastname' => '',
-    ],
-    1 => [
-        'id' => 2,
-        'username' => 'hf',
-        'password' => 'movingtype2017',
-        'firstname' => 'HF St.Gallen',
-        'lastname' => '',
-    ]
 
-];
 
 
 /** ==================================
@@ -176,25 +155,7 @@ function debuginfo($info = '')
  * ================================== */
 
 
-$allowed_domains = array(
-    'localhost:4200',
-    'anibc.local',
-    'http://anibc.local',
-    'http://localhost:4200',
-    'https://localhost:4200',
-    'http://mollo.ch',
-    'https://mollo.ch',
-);
-
-
 $http_origin = $_SERVER['HTTP_ORIGIN'];
-$server = $_SERVER['SERVER_NAME'];
-
-if ($server === 'mollo.ch') {
-    $dir_root = '/home/oliver14/www/mollo.ch/anibc';
-} else {
-    $dir_root = '/Users/ost/MAMP/anibc';
-}
 
 
 // REQUEST OPTIONS

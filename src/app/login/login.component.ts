@@ -43,4 +43,11 @@ export class LoginComponent implements OnInit {
                 });
     }
 
+    fillinForm(name) {
+
+
+        this.model.username = name;
+        this.model.password = name;
+        this.login();
+    }
 }

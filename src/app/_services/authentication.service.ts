@@ -71,69 +71,6 @@ export class AuthenticationService {
     }
 
 
-    /**
-     *
-     * @param {string} username
-     * @param {string} password
-     * @returns {Observable<any | undefined>}
-     */
-    login2(username: string, password: string) {
-        let url = this.config.getPath() + '/api/users/';
-
-        console.log('login', url);
-
-
-        console.log('login username', username);
-        console.log('login password', password);
-
-        let urlSearchParams = new URLSearchParams();
-        urlSearchParams.append('username', username);
-        urlSearchParams.append('password', password);
-
-
-        return this.http.post<any>(url, {
-
-            params: {
-                'username': username,
-                'password': password
-            }
-        }, {
-
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        }).map(
-            (data) => {
-
-                // login successful if there's a jwt token in the response
-                if (data && data.status === true) {
-
-                    console.log('result', data);
-                    if (data.user.token) {
-                        console.log('Message : ', data.message);
-
-                    } else {
-                        console.log('Message : ', data.message);
-                    }
-                    // store user details and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify(data.user));
-                }
-                else if (data && data.status === false) {
-                    console.log('Message : ', data.message);
-                    console.log('Error : ', data.error);
-
-                }
-                return data;
-
-
-            },
-            error => {
-
-
-                console.log(JSON.stringify(error.json()));
-            }
-        )
-
-
-    };
 
 
     /**
