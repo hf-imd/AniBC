@@ -40,15 +40,19 @@ Puchdb
 https://blog.couchbase.com/using-couchbase-mobile-in-a-web-application-with-only-angular-2-and-pouchdb/
 https://github.com/davidmanangan/pouchdb-angular4/tree/master/src
 
-User Registration and Login
+User Registration and Login (mostly replaced by OAuthService)
 http://jasonwatmore.com/post/2016/09/29/angular-2-user-registration-and-login-example-tutorial
+https://theinfogrid.com/tech/developers/angular/angular-5-token-based-authentication/
 
 
-
+OAuthService Implicit Flow
+https://www.softwarearchitekt.at/post/2016/07/01/authentifizierung-in-angular-2-mit-oauth2-oidc-dem-neuen-router-und-guards.aspx
+https://github.com/manfredsteyer/angular-oauth2-oidc
 
 
 #### TODO
 
+ - remove Bootstrap, replace with Semantic UI 3
  - Add Navigation
  - Add PlayerContainer
  - Add Admin / Upload

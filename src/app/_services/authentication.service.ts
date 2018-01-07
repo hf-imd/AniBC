@@ -4,6 +4,7 @@ import {Observable} from "rxjs/Observable";
 import "rxjs/add/operator/map";
 import {ConfigService} from "./config.service";
 import {User} from "../_models/user";
+import {AlertService} from "./alert.service";
 
 interface LoginResponse {
     accessToken: string;
@@ -21,10 +22,8 @@ interface LoginResponse {
 @Injectable()
 export class AuthenticationService {
 
-    constructor(private http: HttpClient, private config: ConfigService) {
-
+    constructor(private http: HttpClient, private config: ConfigService, private alertService: AlertService) {
     }
-
 
     login(username: string, password: string) {
 
@@ -42,30 +41,26 @@ export class AuthenticationService {
                     // login successful if there's a jwt token in the response
                     if (loginResponse && loginResponse.status === true) {
 
-                        console.log('result', loginResponse);
-
-                        if (loginResponse.user.token) {
-                            console.log('Message : ', loginResponse.message);
-
+                        if ( !loginResponse.user.token || 0 === loginResponse.user.token.length ) {
+                            console.log('Login: ', loginResponse.message);
                         } else {
-                            console.log('Message : ', loginResponse.message);
+                            console.log('Error: ', loginResponse.message);
                         }
                         // store user details and jwt token in local storage to keep user logged in between page refreshes
                         localStorage.setItem('currentUser', JSON.stringify(loginResponse.user));
                     }
                     else if (loginResponse && loginResponse.status === false) {
-                        console.log('Message : ', loginResponse.message);
-                        console.log('Error : ', loginResponse.error);
+                        console.log('Login : ', loginResponse.message);
 
                     }
                     return loginResponse;
 
-
                 },
                 error => {
 
+                    this.alertService.error('Fehler beim Login (1)');
+                    return error;
 
-                    console.log(JSON.stringify(error.json()));
                 }
             )
     }

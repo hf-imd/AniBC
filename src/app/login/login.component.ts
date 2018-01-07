@@ -35,11 +35,26 @@ export class LoginComponent implements OnInit {
         this.authenticationService.login(this.model.username, this.model.password)
             .subscribe(
                 data => {
-                    this.router.navigate([this.returnUrl]);
+                    // remove loading spinner
+                    this.loading = false;
+
+                    // login successful if there's a jwt token in the response
+                    if (data && data.status === true) {
+
+                        if ( !data.user.token || 0 === data.user.token.length ) {
+                            this.alertService.success(data.message);
+                            this.router.navigate([this.returnUrl]);
+                        }
+                    }
+                    else if (data && data.status === false) {
+                        this.alertService.error(data.message);
+                    }
+
                 },
                 error => {
-                    this.alertService.error(error);
-                    this.loading = false;
+                    console.log(error);
+
+                    this.alertService.error('Fehler beim Login (2)');
                 });
     }
 

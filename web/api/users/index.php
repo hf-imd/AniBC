@@ -77,7 +77,6 @@ function authenticate($users)
 
 // find if any user matches login credentials
     foreach ($users as $_user) {
-        echo $_user['username'];
 
         if ($_user['username'] === $username && $_user['password'] === $password) {
             $user = $_user;
@@ -98,10 +97,12 @@ function authenticate($users)
         // if login details are valid return 200 OK with user details and  token
         //   http_send_status(200);
 
+
         echo json_encode([
+                "status" => $status,
                 'user' => $user,
                 "token" => $token,
-                "message" => 'Login OK']
+                "message" => "Erfolgreich angemeldet als $username"]
 
         );
 
@@ -109,6 +110,7 @@ function authenticate($users)
         // else return 400 bad request
         //   http_send_status(400);
         echo json_encode([
+                "status" => $status,
                 'user' => false,
                 "token" => false,
                 "message" => 'Benutzername oder Passwort falsch',
@@ -130,14 +132,14 @@ function sanitizeString($var)
     return $var;
 }
 
-function debuginfo($info = '')
+function debuginfo($text = '')
 {
     if (DEBUG) {
 
         return [
-            'info' => $info,
-            'http_origi' => $_SERVER['HTTP_ORIGIN'],
-            'server' => $_SERVER['SERVER_NAME'],
+            'description' => $text,
+            'http_origin' => $_SERVER['HTTP_ORIGIN'],
+            'server_name' => $_SERVER['SERVER_NAME'],
             '_GET' => $_GET,
             '_POST' => $_POST,
         ];
