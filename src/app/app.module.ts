@@ -25,6 +25,7 @@ import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/h
 import {AuthGuard} from "./_helpers/auth.guard";
 import {UserService} from "./_services/user.service";
 import {JwtInterceptor} from "./_helpers/jwt.interceptor";
+import {OAuthModule} from "angular-oauth2-oidc";
 
 const AppRoutes: Routes = [
     {
@@ -65,6 +66,8 @@ const AppRoutes: Routes = [
         FileSizeModule,
         RouterModule.forRoot(AppRoutes),
         HttpClientModule,
+        OAuthModule.forRoot()
+
 
 
     ],
